@@ -9,8 +9,7 @@ function TodoList(props) {
     <ul>
       {tasks.map((task, taskIndex) => {
         return (
-          <TodoCard key={taskIndex} identifier={taskIndex} updateTasks={updateTasks} deleteTask={deleteTask}>
-            <p>{task}</p>
+          <TodoCard key={taskIndex} identifier={taskIndex} task={task} updateTasks={updateTasks} deleteTask={deleteTask}>
           </TodoCard>
         );
       })}

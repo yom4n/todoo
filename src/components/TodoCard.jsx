@@ -5,10 +5,10 @@ import { MdOutlineDone } from "react-icons/md";
 import { useState } from "react";
 
 function TodoCard(props) {
-  const { children, identifier, updateTasks, deleteTask } = props;
+  const { task, identifier, updateTasks, deleteTask } = props;
 
   const [editState, setEditState] = useState(false);
-  const [editInputValue, setEditInputValue] = useState(children.props.children);
+  const [editInputValue, setEditInputValue] = useState(task);
   function handleEdit() {
     if (editState == false) {
       setEditState(!editState);
@@ -40,13 +40,15 @@ function TodoCard(props) {
         </>
       ) : (
         <>
-          {children}
+          <div className="task">
+            {task}
+          </div>
           <div className="button-container">
             <button onClick={handleEdit}>
-              <LiaEdit className="icon" />
+              <LiaEdit className="icon-edit" />
             </button>
             <button onClick={handleDelete}>
-              <FaRegTrashAlt className="icon"/>
+              <FaRegTrashAlt className="icon-trash"/>
             </button>
           </div>
         </>

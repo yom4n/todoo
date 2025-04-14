@@ -26,26 +26,92 @@ body {
 
 .base-container {
   margin: 10vw auto;
-  width: max-content;
+  width: 25rem;
 }
 
 .input-container {
+  position: relative;
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   width: 100%;
-  justify-content: space-between;
+}
+
+.textarea-container {
+  /* position: relative; border animation*/
+  font-size: 2rem;
+  padding-top: 0.35rem;
+  padding-left: 0.3rem;
+  padding-right: 0.25rem;
+  /* border: 2px solid rgba(47, 49, 57, 1); border animation*/
+  transition: all 0.5 ease;
+  
+}
+
+.textarea-container textarea {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  /* padding:0.5rem; border animation */
+  padding-block: 0.5rem;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 0.3rem;
+  outline: none;
+}
+
+.textarea-container .placeholder {
+  position: absolute;
+  left: 0.5rem;
+  top: 1.5rem;
+  transform: translateY(-50%);
+  border-radius: 0.3rem;
+  padding-inline: 0.3rem;
+  color: rgb(149, 155, 182);
+  background-color: transparent; 
+  transition: all 0.5s ease;
+  /* background-color 0.3s cubic-bezier(0.12, 0.57, 0.63, 0.21) ; border animation*/
+}
+
+/* .textarea-container textarea:valid + .placeholder, */
+.textarea-container textarea:focus + .placeholder {
+  /* left: 0.6rem;  border animation*/ 
+  top: 0rem;
+  transform: translateY(-80%);
+  font-size: 0.8rem;
+  color: burlywood;
+  /* background-color: rgb(47, 49, 57);  border animation*/
+}
+
+.textarea-container:has(textarea:focus) {
+  /* border: 2px solid white;  border animation*/
+  border-radius: 0.5rem;
+}
+
+.input-buttons {
+  align-self: flex-end;
+  display: flex;
 }
 
 .add-button {
-  width: 100%;
-  margin-inline: 0.5rem;
-  padding-block: 0.3rem ;
+  /* position: absolute; border animation*/
+  align-self: center;
+  top: 4rem;
+  width: 18vw;
+  max-width: 10rem;
+  height: 100%;
+  height: max-content;
+  font-size: 2vw;
+  padding-block: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.2rem;
+
   background-color: rgb(47, 49, 57);
   color: burlywood;
   border: 1px solid burlywood;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition:  0.2s;
-
+  transition: 0.2s;
 }
 
 .add-button:hover {
@@ -53,33 +119,65 @@ body {
   background-color: burlywood;
 }
 
+.voice-button,
+.image-button {
+  background-color: rgb(47, 49, 57);
+  color: burlywood;
+  cursor: pointer;
+  /* border: 1px solid burlywood; */
+  border: none;
+  padding-inline: 0.5rem;
+}
+
+.icon-voice,
+.icon-image {
+  transform: translateY(10%);
+  height:2rem;
+  width: 2rem;
+}
+
+
 ul {
   padding: 0;
 }
 
 .todo-item {
   display: flex;
-  justify-content:space-between;
-  color:burlywood;
+  justify-content: space-between;
+  color: burlywood;
+}
+
+.task {
+  display: flex;
+  height: 4rem;
+  align-items: center;
 }
 
 .button-container {
   display: flex;
   justify-content: end;
-  align-items: center; 
-  border: 1px solid rgb(137, 137, 137);
+  align-items: center;
   border-radius: 2rem;
-  padding: 0 0.5rem;
   margin: 0.7rem 0 0.7rem 0.7rem;
 }
 
 .button-container > button {
   display: flex;
   width: 100%;
-  height: 50%;
+  height: 60%;
   background-color: rgb(47, 49, 57);
   color: white;
   padding: 0 0.5rem;
   border: none;
   cursor: pointer;
+}
+
+.icon-edit {
+  height: 1.5rem;
+  width: 1.5rem;
+  transform: translateY(-8%);
+}
+.icon-trash {
+  height: 1.2rem;
+  width: 1.2rem;
 }
