@@ -24,6 +24,13 @@ body {
   background-color: rgb(47, 49, 57);
 }
 
+.auth-container {
+  display: flex;
+  max-width: 20rem;
+  align-items: center;
+
+}
+
 .base-container {
   margin: 10vw auto;
   width: 25rem;
@@ -52,12 +59,13 @@ body {
   background-color: rgb(255, 255, 255);
   width: 100%;
   /* padding:0.5rem; border animation */
-  padding-block: 0.5rem;
+  padding: 0.5rem;
   resize: none;
   overflow: hidden;
   border: none;
   border-radius: 0.3rem;
   outline: none;
+  height: auto;
 }
 
 .textarea-container .placeholder {
