@@ -5,22 +5,21 @@ import { MdOutlineDone } from "react-icons/md";
 import { useState } from "react";
 
 function TodoCard(props) {
-  const { task, identifier, updateTasks, deleteTask } = props;
+  const { task, identifier, image, updateTasks, deleteTask } = props;
 
   const [editState, setEditState] = useState(false);
   const [editInputValue, setEditInputValue] = useState(task);
   function handleEdit() {
     if (editState == false) {
       setEditState(!editState);
-    }else {
-      updateTasks(editInputValue, identifier)
+    } else {
+      updateTasks(editInputValue, identifier);
       setEditState(!editState);
-
     }
   }
 
   function handleDelete() {
-    deleteTask(identifier)
+    deleteTask(identifier);
   }
 
   return (
@@ -40,15 +39,15 @@ function TodoCard(props) {
         </>
       ) : (
         <>
-          <div className="task">
-            {task}
-          </div>
+          <img src={image} alt="" />
+
+          <div className="task">{task}</div>
           <div className="button-container">
             <button onClick={handleEdit}>
               <LiaEdit className="icon-edit" />
             </button>
             <button onClick={handleDelete}>
-              <FaRegTrashAlt className="icon-trash"/>
+              <FaRegTrashAlt className="icon-trash" />
             </button>
           </div>
         </>

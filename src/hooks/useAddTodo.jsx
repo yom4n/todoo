@@ -1,9 +1,24 @@
-import { createClient } from "@supabase/supabase-js";
+import { useMutation } from "@tanstack/react-query";
 
-const supabase = createClient("https://flezgzseefxgmvytuidt.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZsZXpnenNlZWZ4Z212eXR1aWR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1Njk3MjYsImV4cCI6MjA2MTE0NTcyNn0.onq8zJBVJknGO_kT7Lke3_CQyCM0AqwOoI7Fc8iuhwc");
+import { uploadFile, saveNote } from "../api/api";
 
+export const useUploadFile = () => {
+  return useMutation({
+    mutationKey: ["upload-file"],
+    mutationFn: ({ file, folder }) => uploadFile({ file, folder }),
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};
 
-export function useAddTodo() {
-
-  return 
-}
+export const useAddTodo = () => {
+  return useMutation({
+    mutationKey: ["add-todo"],
+    mutationFn: ({ inputValue, imageUrl, tag, user_name }) =>
+      saveNote({ inputValue, imageUrl, tag, user_name }),
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};
