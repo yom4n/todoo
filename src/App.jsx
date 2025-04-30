@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
-import { useEffect } from "react";
 
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -9,7 +8,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
+import { TodoDataContext } from "./Context";
+
 import {supabase} from './supabaseClient'
+
 
 const queryClient = new QueryClient()
 
@@ -20,6 +22,7 @@ function App() {
   // *   const storedList = localStorage.getItem("tasks");
   // *   return storedList ? JSON.parse(storedList) : [];
   // * });
+  const [queryData, setQueryData] = useState()
 
   const [session, setSession] = useState(null);
   useEffect(() => {
@@ -68,12 +71,14 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <button onClick={signOut}>SignOut</button>
           <div className="base-container">
-            <TodoInput handleTasks={handleTasks} session={session} />
-            <TodoList
-              updateTasks={updateTasks}
-              deleteTask={deleteTask}
-              session={session}
-            />
+            <TodoDataContext.Provider value={{queryData, setQueryData}}>
+              <TodoInput handleTasks={handleTasks} session={session} />
+              <TodoList
+                updateTasks={updateTasks}
+                deleteTask={deleteTask}
+                session={session}
+              />
+            </TodoDataContext.Provider>
           </div>
           <ReactQueryDevtools/>
       </QueryClientProvider>

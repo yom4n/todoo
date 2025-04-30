@@ -36,7 +36,7 @@ body {
   flex-direction: column;
   margin: 10vw auto;
   width: 100%;
-  padding-inline: 20vw;
+  padding-inline: 0;
 }
 
 .input-container {
@@ -149,11 +149,22 @@ body {
 }
 
 
-ul {
+.list-container {
   align-self: center;
-  width: 80%;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  text-overflow: unset hidden;
+  white-space:unset;
+}
+
+ul {
+  justify-self: center;
+  width: max-content;
+  margin: 0 auto;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   text-overflow: unset hidden;
   white-space:unset;

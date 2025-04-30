@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaRegImage } from "react-icons/fa6";
 import { LuAudioLines } from "react-icons/lu";
 import { useDropzone } from "react-dropzone";
@@ -9,11 +8,15 @@ import { supabase } from "../supabaseClient";
 
 import { ReactMediaRecorder } from "react-media-recorder";
 import { useUploadFile, useAddTodo } from "../hooks/useAddTodo";
+import { TodoDataContext } from "../Context";
+import { useGetTodos } from "../hooks/useGetTodos";
+import { useEffect } from "react";
 
 function TodoInput(props) {
   const [inputValue, setInputValue] = useState(``);
   const [tag, setTag] = useState(false);
   const [recievedFile, setRecievedFile] = useState({});
+  const { queryData, setQueryData } = useContext(TodoDataContext);
 
   const {
     mutate: uploadFile,
@@ -71,16 +74,40 @@ function TodoInput(props) {
             props.handleTasks(inputValue);
             console.log(recievedFile);
 
-            uploadFile({
-              folder: props.session?.user?.email,
-              file: recievedFile,
-            });
+            uploadFile(
+              {
+                folder: props.session?.user?.email,
+                file: recievedFile,
+              },
+              {
+                onSuccess: (data) =>
+                  saveNote(
+                    {
+                      inputValue,
+                      imageUrl: data,
+                      tag,
+                      user_name: props.session?.user?.user_metadata?.full_name,
+                    },
+                    {
+                      onSuccess: () => {
+                        const { data: fetchedOnPostData, isSuccess } =
+                          useGetTodos({
+                            session: props.session,
+                          });
+                        useEffect(() => {
+                          setQueryData(fetchedOnPostData);
+                        }, [isSuccess]);
+                      },
+                    }
+                  ),
+              }
+            );
             console.log(imageData);
-            console.log(fileUploadStatus)
+            console.log(fileUploadStatus);
             if (fileUploadStatus) {
               // saveNote({ inputValue, imageUrl, tag, user_name });
-              console.log(imageData)
-              console.log(fileUploadStatus)
+              console.log(imageData);
+              console.log(fileUploadStatus);
             }
 
             setInputValue(``);

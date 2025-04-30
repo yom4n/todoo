@@ -1,31 +1,38 @@
-import React from "react";
 import TodoCard from "./TodoCard";
 import { useEffect, useState } from "react";
 import { useGetTodos } from "../hooks/useGetTodos";
+import { useContext } from "react";
+import { TodoDataContext } from "../Context";
 
 function TodoList(props) {
   const { tasks, updateTasks, deleteTask } = props;
-  // useEffect(()=>{console.log("list rerendered")},[tasks])
-  // const { data, isLoadingError } = useGetTodos()
+  const { queryData, setQueryData } = useContext(TodoDataContext)
 
-  const { data } = useGetTodos({ session: props.session });
+  const { data: fetchedData, isSuccess } = useGetTodos({ session: props.session });
+  
 
-  if (data) {
+  useEffect(() => {
+    setQueryData(fetchedData)
+  }, [isSuccess])
+
+  if (queryData) {
     return (
-      <ul>
-        {data.map((task, taskIndex) => {
-          return (
-            <TodoCard
-              key={task.id}
-              identifier={taskIndex}
-              image={task.image_url}
-              task={task.todo}
-              updateTasks={updateTasks}
-              deleteTask={deleteTask}
-            ></TodoCard>
-          );
-        })}
-      </ul>
+      <div className="list-container">
+        <ul>
+          {queryData.map((task, taskIndex) => {
+            return (
+              <TodoCard
+                key={task.id}
+                identifier={taskIndex}
+                image={task.image_url}
+                task={task.todo}
+                updateTasks={updateTasks}
+                deleteTask={deleteTask}
+              ></TodoCard>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 }
