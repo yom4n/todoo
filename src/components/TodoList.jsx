@@ -5,29 +5,31 @@ import { useContext } from "react";
 import { TodoDataContext } from "../Context";
 
 function TodoList(props) {
-  const { tasks, updateTasks, deleteTask } = props;
+  const { tasks, updateTasks, deleteTask, queryClient } = props;
   const { queryData, setQueryData } = useContext(TodoDataContext)
 
   const { data: fetchedData, isSuccess } = useGetTodos({ session: props.session });
   
 
-  useEffect(() => {
-    setQueryData(fetchedData)
-  }, [isSuccess])
+  // useEffect(() => {
+  //   setQueryData(fetchedData)
+  // }, [isSuccess])
 
-  if (queryData) {
+  if (fetchedData) {
     return (
       <div className="list-container">
         <ul>
-          {queryData.map((task, taskIndex) => {
+          {fetchedData.map((task, taskIndex) => {
             return (
               <TodoCard
                 key={task.id}
+                taskID={task.id}
                 identifier={taskIndex}
-                image={task.image_url}
+                imageUrl={task.image_url}
                 task={task.todo}
                 updateTasks={updateTasks}
                 deleteTask={deleteTask}
+                queryClient={queryClient}
               ></TodoCard>
             );
           })}

@@ -16,7 +16,6 @@ function TodoInput(props) {
   const [inputValue, setInputValue] = useState(``);
   const [tag, setTag] = useState(false);
   const [recievedFile, setRecievedFile] = useState({});
-  const { queryData, setQueryData } = useContext(TodoDataContext);
 
   const {
     mutate: uploadFile,
@@ -71,7 +70,6 @@ function TodoInput(props) {
         <button
           className="add-button"
           onClick={(e) => {
-            props.handleTasks(inputValue);
             console.log(recievedFile);
 
             uploadFile(
@@ -90,13 +88,7 @@ function TodoInput(props) {
                     },
                     {
                       onSuccess: () => {
-                        const { data: fetchedOnPostData, isSuccess } =
-                          useGetTodos({
-                            session: props.session,
-                          });
-                        useEffect(() => {
-                          setQueryData(fetchedOnPostData);
-                        }, [isSuccess]);
+                        props.queryClient.invalidateQueries(["user-todos"])
                       },
                     }
                   ),

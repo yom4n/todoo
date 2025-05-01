@@ -72,11 +72,13 @@ function App() {
         <button onClick={signOut}>SignOut</button>
           <div className="base-container">
             <TodoDataContext.Provider value={{queryData, setQueryData}}>
-              <TodoInput handleTasks={handleTasks} session={session} />
+              {/* <TodoInput handleTasks={handleTasks} session={session} queryClient={queryClient} /> */}
+              <TodoInput session={session} queryClient={queryClient} />
               <TodoList
-                updateTasks={updateTasks}
-                deleteTask={deleteTask}
+                // updateTasks={updateTasks}
+                // deleteTask={deleteTask}
                 session={session}
+                queryClient={queryClient}
               />
             </TodoDataContext.Provider>
           </div>

@@ -34,3 +34,36 @@ export const saveNote = async ({ inputValue, imageUrl, tag, user_name }) => {
   }
   return data;
 };
+
+
+export const deleteFileFromUrl = async ({publicUrl}) => {
+    const bucketName = 'mediaa'; // Replace with your actual bucket name
+    console.log(publicUrl)
+    console.log(typeof(publicUrl))
+    // Extract the file path from the public URL
+    const urlParts = publicUrl.split(`${bucketName}/`);
+    const filePath = urlParts[1];
+  
+    if (!filePath) throw new Error('Invalid URL or bucket name.');
+  
+    const { error } = await supabase
+      .storage
+      .from(bucketName)
+      .remove([filePath]);
+  
+    if (error) throw new Error(`Storage file deletion failed: ${error.message}`);
+  };
+  
+
+export const deleteNote = async ({id}) => {
+    const { data, error } = await supabase
+    .from('notes')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(`Database row deletion failed: ${error.message}`);
+  }
+  return data;
+
+}

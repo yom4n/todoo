@@ -7,7 +7,7 @@ export const useUploadFile = () => {
     mutationKey: ["upload-file"],
     mutationFn: ({ file, folder }) => uploadFile({ file, folder }),
     onError: (err) => {
-      console.log(err);
+      throw new Error(`Storage file upload failed: ${err.message}`);
     },
   });
 };
@@ -18,7 +18,7 @@ export const useAddTodo = () => {
     mutationFn: ({ inputValue, imageUrl, tag, user_name }) =>
       saveNote({ inputValue, imageUrl, tag, user_name }),
     onError: (err) => {
-      console.log(err);
+      throw new Error(`Database row addition failed: ${err.message}`);
     },
   });
 };

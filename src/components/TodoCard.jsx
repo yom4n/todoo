@@ -3,9 +3,10 @@ import { LiaEdit } from "react-icons/lia";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineDone } from "react-icons/md";
 import { useState } from "react";
+import { useDeleteFile, useDeleteTodo } from "../hooks/useDeleteTodo";
 
 function TodoCard(props) {
-  const { task, identifier, image, updateTasks, deleteTask } = props;
+  const { task, taskID, identifier, imageUrl, updateTasks, deleteTask, queryClient } = props;
 
   const [editState, setEditState] = useState(false);
   const [editInputValue, setEditInputValue] = useState(task);
@@ -21,7 +22,7 @@ function TodoCard(props) {
   function handleDelete() {
     deleteTask(identifier);
   }
-
+  const {mutate: deleteTodo} = useDeleteTodo({queryClient: queryClient, imageUrl: imageUrl})
   return (
     <li className="todo-item">
       {editState ? (
@@ -39,14 +40,14 @@ function TodoCard(props) {
         </>
       ) : (
         <>
-          <img src={image} alt="" />
+          <img src={imageUrl} alt="" />
 
           <div className="task">{task}</div>
           <div className="button-container">
             <button onClick={handleEdit}>
               <LiaEdit className="icon-edit" />
             </button>
-            <button onClick={handleDelete}>
+            <button onClick={()=> deleteTodo({id: taskID, imageUrl: imageUrl})}>
               <FaRegTrashAlt className="icon-trash" />
             </button>
           </div>
